@@ -1,0 +1,180 @@
+{
+  "entities": {
+    "SiteSettings": {
+      "title": "SiteSettings",
+      "description": "Global configuration including marquees, contact details, and store status",
+      "type": "object",
+      "properties": {
+        "headerMarquee": {
+          "type": "string",
+          "description": "Cyan marquee text displayed at top of website",
+          "maxLength": 500
+        },
+        "headerMarqueeSpeed": {
+          "type": "number",
+          "description": "Animation duration in seconds for header marquee (lower is faster)"
+        },
+        "footerMarquee": {
+          "type": "string",
+          "description": "Gray marquee text displayed in catalog footers",
+          "maxLength": 500
+        },
+        "footerMarqueeSpeed": {
+          "type": "number",
+          "description": "Animation duration in seconds for footer marquee (lower is faster)"
+        },
+        "whatsappNumber": {
+          "type": "string",
+          "description": "WhatsApp contact number for receiving customer orders",
+          "maxLength": 30
+        },
+        "storeStatus": {
+          "type": "string",
+          "description": "Current status of the counter",
+          "enum": ["Buka", "Tutup", "Istirahat"]
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Timestamp of last settings update"
+        }
+      },
+      "required": ["headerMarquee", "whatsappNumber"]
+    },
+    "Product": {
+      "title": "Product",
+      "description": "Individual product, voucher, pulse, or game item",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique product identifier",
+          "maxLength": 100
+        },
+        "category": {
+          "type": "string",
+          "description": "Main category",
+          "enum": ["internet", "pulsa", "pln", "bank", "game"]
+        },
+        "subCategory": {
+          "type": "string",
+          "description": "Sub-category (e.g. ff, ml, pubg, codm, etc.)",
+          "maxLength": 50
+        },
+        "provider": {
+          "type": "string",
+          "description": "Network provider or brand name",
+          "maxLength": 50
+        },
+        "name": {
+          "type": "string",
+          "description": "Product display name",
+          "maxLength": 150
+        },
+        "amount": {
+          "type": "string",
+          "description": "Quota, pulse denomination, diamond count, or amount",
+          "maxLength": 50
+        },
+        "price": {
+          "type": "string",
+          "description": "Formatted price string (e.g. Rp 25.000)",
+          "maxLength": 50
+        },
+        "period": {
+          "type": "string",
+          "description": "Validity period or info",
+          "maxLength": 50
+        },
+        "info": {
+          "type": "string",
+          "description": "Extra details or instructions",
+          "maxLength": 200
+        },
+        "isAvailable": {
+          "type": "boolean",
+          "description": "Stock status: whether the product is currently active and in stock"
+        },
+        "orderIndex": {
+          "type": "number",
+          "description": "Sorting priority in the table"
+        }
+      },
+      "required": ["id", "category", "name", "price"]
+    },
+    "BlogPost": {
+      "title": "BlogPost",
+      "description": "Educational blog articles, tips, guides, and counter promotions",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique article identifier"
+        },
+        "title": {
+          "type": "string",
+          "description": "Article headline title"
+        },
+        "slug": {
+          "type": "string",
+          "description": "URL friendly slug identifier"
+        },
+        "category": {
+          "type": "string",
+          "description": "Category name for filtering"
+        },
+        "author": {
+          "type": "string",
+          "description": "Author name or role"
+        },
+        "date": {
+          "type": "string",
+          "description": "Formatted publication date string"
+        },
+        "createdAt": {
+          "type": "number",
+          "description": "Timestamp in milliseconds"
+        },
+        "imageUrl": {
+          "type": "string",
+          "description": "Banner cover image URL"
+        },
+        "readTime": {
+          "type": "string",
+          "description": "Estimated read duration"
+        },
+        "summary": {
+          "type": "string",
+          "description": "Short excerpt lead paragraph"
+        },
+        "content": {
+          "type": "string",
+          "description": "Full body text of the article"
+        },
+        "tags": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Search and topic tags"
+        },
+        "isPublished": {
+          "type": "boolean",
+          "description": "Publication status (live or draft)"
+        }
+      },
+      "required": ["id", "title", "content", "category"]
+    }
+  },
+  "firestore": {
+    "/settings/global": {
+      "schema": { "$ref": "#/entities/SiteSettings" },
+      "description": "Single global document storing marquee banners and store metadata"
+    },
+    "/products/{productId}": {
+      "schema": { "$ref": "#/entities/Product" },
+      "description": "All editable products and packages for pulsa, kuota, PLN, game, and bank"
+    },
+    "/articles/{articleId}": {
+      "schema": { "$ref": "#/entities/BlogPost" },
+      "description": "Collection of blog articles, tips, and promotions readable by all and managed via admin"
+    }
+  }
+}

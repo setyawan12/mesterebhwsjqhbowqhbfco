@@ -1,0 +1,28 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Default deny catch-all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Global settings (Marquee, contact info, store status)
+    match /settings/global {
+      allow read: if true;
+      allow write: if true; // Managed via private admin portal
+    }
+
+    // Products catalog (Pulsa, Internet, PLN, Bank, Game)
+    match /products/{productId} {
+      allow read: if true;
+      allow write: if true; // Managed via private admin portal
+    }
+
+    // Blog Articles & News
+    match /articles/{articleId} {
+      allow read: if true;
+      allow write: if true; // Managed via private admin portal
+    }
+  }
+}

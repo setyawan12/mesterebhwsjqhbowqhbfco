@@ -1,0 +1,6 @@
+{
+  "name": "MsCell - Konter Pulsa, Kuota & Layanan Digital",
+  "description": "Website resmi MsCell Klaten. Melayani pengisian pulsa, paket kuota internet murah, token listrik PLN, transfer bank BRILink, dan top up voucher game online terpercaya.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
